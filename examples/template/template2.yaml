@@ -1,0 +1,62 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: iam-role-assignment
+  title: Add IAM Role to Group
+  description: Template to assign new IAM role to a Google Group
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: IAM Role Assignment Details
+      required:
+        - group_name
+        - role_name
+      properties:
+        group_name:
+          type: string
+          description: Name of the Google Group
+        role_name:
+          type: string
+          description: IAM Role (e.g. roles/viewer)
+
+  steps:
+    - id: fetch
+      name: Fetch Infra Repo
+      action: fetch:template
+      input:
+        url: https://github.com/Nanthagopal87/node-js-app
+        targetPath: infra
+        values:
+          group_name: ${{ parameters.group_name }}
+          role_name: ${{ parameters.role_name }}
+
+    - id: patch-terraform
+      name: Patch Terraform Code
+      action: filesystem:append
+      input:
+        path: README.md
+        content: |
+          resource "google_project_iam_member" "group_${{ parameters.group_name }}" {
+            project = "my-gcp-project"
+            role    = "${{ parameters.role_name }}"
+            member  = "group:${{ parameters.group_name }}"
+          }
+
+    - id: publish
+      name: Commit & Push Changes
+      action: publish:github
+      input:
+        repoUrl: github.com?owner=Nanthagopal87&repo=node-js-app
+        branch: main
+        filePath: infra
+        title: "Add IAM role for group ${{ parameters.group_name }}"
+        description: "Added role ${{ parameters.role_name }} for group ${{ parameters.group_name }}"
+        commitMessage: "Add IAM role for ${{ parameters.group_name }}"
+
+  output:
+    links:
+      - title: View Infra Repo
+        url: https://github.com/Nanthagopal87/node-js-app

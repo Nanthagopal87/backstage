@@ -1,0 +1,54 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: modify-github-file
+  title: Modify Existing File in GitHub Repo
+  description: Clones, modifies a file, and commits it back
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: GitHub Repo Info
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository URL
+          type: string
+
+  steps:
+    - id: fetch
+      name: Clone the GitHub repo
+      action: fetch:template
+      input:
+        url: 'https://github.com/Nanthagopal87/node-js-app'
+        #url: 'https://raw.githubusercontent.com/Nanthagopal87/node-js-app/main/README.md' 
+        #url: 'https://raw.githubusercontent.com/Nanthagopal87/node-js-app/refs/heads/main/README.md'
+      targetPath: ./workspace
+
+    # - id: modify
+    #   name: Modify file
+    #   action: fs:append
+    #   input:
+    #     path: ./workspace/README.md
+    #     content: |
+    #       ## Appended by Backstage
+
+    - id: debug
+      name: Show files
+      action: debug:log
+      input:
+        message: |
+          Contents of workspace:
+          ${{ parameters.repoUrl }}
+
+    - id: publish
+      name: Commit and Push Changes
+      action: publish:github
+      input:
+        sourcePath: ./workspace
+        #allowedHosts: ["github.com"]
+        repoUrl: github.com?owner=Nanthagopal87&repo=node-js-appppp
+        description: Pushed modified file from Backstage template
+        #token: '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'  # Make sure GITHUB_TOKEN is configured

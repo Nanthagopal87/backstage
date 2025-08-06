@@ -1,0 +1,62 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: terraform-autovars
+  title: Terraform Repo with Dynamic autovars.json
+  description: Fetches and updates autovars.json from remote
+spec:
+  owner: your-team
+  type: service
+
+  parameters:
+    - title: Terraform Configuration
+      required: [environment, region]
+      properties:
+        environment:
+          type: string
+          title: Environment
+        region:
+          type: string
+          title: AWS Region
+
+  steps:
+    - id: fetchAutovars
+      name: Fetch autovars.json from GitHub
+      #action: fetch:plain
+      action: fetch:github
+      input:
+        repoUrl: github.com?repo=node-js-app&owner=Nanthagopal87
+        filePath: autovars.json
+        targetPath: ./terraform
+
+    - id: modifyAutovars
+      name: Modify autovars.json
+      action: custom:modify-json
+      input:
+        path: terraform/autovars.json
+        updates:
+          environment: ${{ parameters.environment }}
+          region: ${{ parameters.region }}
+
+    - id: debugOutput
+      name: Debug output
+      action: debug:log
+      input:
+        message: |
+          Updated autovars.json content:
+          ${{ readFile('terraform/autovars.json') }}
+
+    # Optional: Create GitHub repo
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        repoUrl: github.com?owner=your-org&repo=terraform-${{ parameters.environment }}
+        title: Terraform Infrastructure Repo
+        description: Generated via Backstage
+        access: public
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}

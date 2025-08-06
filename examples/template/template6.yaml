@@ -1,0 +1,74 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-repository
+  title: Create new repository
+spec:
+  owner: backstage-developers
+  type: golden
+  parameters:
+    - title: New repository information
+      required:
+        - name
+        - description
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Repository name
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Repository description
+  steps:
+    # - id: createRepository
+    #   name: Create repository
+    #   action: github:repo:create
+    #   input:
+    #     repoUrl: github.com?owner=Nanthagopal87&repo=${{ parameters.name }}
+    #     description: ${{ parameters.description }}
+
+    - id: encodeName
+      name: Encoding the name
+      action: util:encode
+      input:
+        data: ${{ parameters.name }}
+
+    - id: debug
+      name: Show files
+      action: debug:log
+      input:
+        message: |
+          Encoded Repo url:
+          ${{ steps.encodeName.output.encoded }}
+    - id: debugInput
+      name: Input Debug
+      action: debug:log
+      input:
+        message: |
+          Original name: ${{ parameters.name }}
+
+    - id: debugOutput
+      name: Output Debug
+      action: debug:log
+      input:
+        message: |
+          Encoded name: ${{ steps.encodeName.output.encoded }}
+
+    - id: createRepository
+      name: Create repository
+      action: github:repo:create
+      input:
+        # You can use the output of previous steps in the next steps as:
+        #repoUrl: github.com/Nanthagopal87/${{ steps.encodeName.output.encoded }}
+        repoUrl: github.com?owner=Nanthagopal87&repo=${{ steps.encodeName.output.encoded }}
+        description: ${{ parameters.description }}
+
+  output:
+    links:
+      - url: ${{ steps.createRepository.output.remoteUrl }}
+        title: 'Repository remote URL'
+    text:
+      - title: New repository created
+        content: Wohoo, you can start working at ${{ steps.createRepository.output.remoteUrl }}

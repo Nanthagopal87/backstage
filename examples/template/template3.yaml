@@ -1,0 +1,48 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: append-autovars
+  title: Append to autovars.json
+  description: Adds IAM role or permission entry via fs:write append
+spec:
+  owner: platform-team
+  type: infrastructure
+
+  parameters:
+    - title: IAM Role Input
+      required:
+        - group
+        - role
+      properties:
+        group:
+          type: string
+          description: Group name (e.g., developers)
+        role:
+          type: string
+          description: IAM role to assign (e.g., viewer)
+
+  steps:
+    - id: fetch-template
+      name: Fetch Source Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        targetPath: .
+
+    - id: append-var
+      action: fs:append
+      input:
+        path: ./skeleton/autovars.json
+        content: |
+          {"${{ parameters.group }}": "${{ parameters.role }}"}
+
+    - id: log
+      name: Log complete
+      action: debug:log
+      input:
+        message: autovars.json updated with ${{ parameters.group }} role
+
+  # output:
+  #   links:
+  #     - title: View Repository
+  #       url: https://your.repo.url/
