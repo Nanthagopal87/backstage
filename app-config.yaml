@@ -41,16 +41,15 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
-      #token: ${GITHUB_TOKEN}
+      token: ${GITHUB_TOKEN}
       #token: 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
-      token: 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
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
     #   token: ${GHE_TOKEN}
   gitlab:
     - host: gitlab.com
-      token: glpat-Bwp59qq8SRlTyznofi0jYG86MQp1OjMxbTllCw.01.120d6xtd5
+      token: ${GITLAB_TOKEN}
 
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.

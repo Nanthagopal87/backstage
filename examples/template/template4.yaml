@@ -51,4 +51,4 @@ spec:
         #allowedHosts: ["github.com"]
         repoUrl: github.com?owner=Nanthagopal87&repo=node-js-appppp
         description: Pushed modified file from Backstage template
-        #token: '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'  # Make sure GITHUB_TOKEN is configured
+        #token: ${GITHUB_TOKEN}  # Make sure GITHUB_TOKEN is configured
