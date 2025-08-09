@@ -1,3 +1,73 @@
+
+### Create Frontend Plugin
+```
+yarn backstage-cli create-plugin --name json-tester
+```
+
+### Add Plugin to App
+```
+In packages/app/src/plugins.ts:
+export { JsonTesterPage } from '@backstage/plugin-json-tester';
+```
+
+```
+And in your routes.ts:
+<Route path="/json-tester" element={<JsonTesterPage />} />
+```
+
+✅ Result
+Now when you visit:
+http://localhost:3000/json-tester
+
+You get a UI with:
+JSON input form
+Modify logic preview
+Instant feedback
+
+
+
+
+### USECASE 2
+List out  the step to modify the json file in gitlab repo using Backstage using custom actions.
+1. Fetch the json file from a gitlab repo
+2. Create a feature branch and modify the json based on inputs received through templates
+3. Commit and Push the updated json back to Gitlab repo
+4. Raise a PR request to main branch
+5. Send a notifcation to MS team channel using api with the help of custom plugin
+
+
+### Thoughts
+
+Before implementing this, i have another thought. Before integrating Custom Actions in to the templetes, why can't we create a dedicated ui component for ease of testing. Just i want to pass the input key/value pair via ui with the help of actions it should result the modified json. Post checking i will integarte in to templates
+
+That’s a very smart approach 💡—creating a dedicated UI component to test custom actions independently before embedding them in templates ensures:
+
+Rapid iteration and debugging
+
+UI flexibility for input
+
+Clear preview of resulting JSON
+
+✅ What You’re Proposing:
+A standalone React UI component inside Backstage, where you input JSON keys/values → on submit, it runs the custom action logic → returns and displays the modified JSON preview.
+
+🧩 Architecture
+Frontend:
+
+A custom React component plugin/page (e.g., json-tester)
+
+Input form: JSON file URL, keys to modify, values
+
+Output section: shows resulting modified JSON
+
+Backend:
+
+Reuse your custom action logic in an express route handler
+
+Avoid Git clone for now (can test purely in-memory)
+
+Accept JSON input, simulate transformation, return modified JSON
+
 ### ============== Create a new Plugin=============
 
 1. yarn new

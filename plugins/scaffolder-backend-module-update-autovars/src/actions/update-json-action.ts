@@ -1,33 +1,41 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
-import { writeFile } from 'fs-extra';
-
+import { z } from 'zod';
 /**
  * Creates a custom scaffolder action to encode a string and write to a file.
  */
 export const createUpdateAutovarsAction = () => {
   return createTemplateAction({
     id: 'util:update-json',
-    description: 'Encodes string and saves it to urlEncoded.txt',
+    description: 'Mocke update a JSON file',
     schema: {
       input: z => z.object({
-        data: z.string().describe('String data to encode'),
+        repoUrl: z.string().describe('GitLab repository URL'),
+        filePath: z.string().describe('Path to the JSON file in the workspace'),
+        updates: z.record(z.any()).describe('key-value pairs to update in the JSON file'),
       }),
       output: z => z.object({
-        encoded: z.string(),
+        updatedJson: z.record(z.any()).describe('The updated JSON content'),
       }),
     },
     supportsDryRun: true,
     async handler(ctx) {
-      if (ctx.isDryRun) {
-        ctx.output('encoded', 'foobar');
-        return;
-      }
+      const { repoUrl, filePath, updates } = ctx.input;
 
-      const encoded = encodeURIComponent(ctx.input.data);
+      ctx.logger.info(`Updating JSON file at ${filePath} with updates: ${JSON.stringify(updates)}`);
 
-      await writeFile(`${ctx.workspacePath}/urlEncoded.txt`, encoded);
-
-      ctx.output('encoded', encoded);
+      //Mock the update operation
+      const originalJson = {
+        "name": "example",
+        "description": "This is an example JSON file",
+         filePath,
+         repoUrl,
+      };
+       
+     const updatedJson = {
+      ...originalJson,
+      ...updates
+     }
+      ctx.output('updatedJson', updatedJson);
     },
   });
 };

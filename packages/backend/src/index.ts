@@ -63,9 +63,10 @@ backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 backend.add(import('@backstage/plugin-kubernetes-backend'));
 
 // Custom Plugins
+// See https://backstage.io/docs/plugins/creating-plugins#adding-a-plugin-to-the-backend
 backend.add(import('@internal/plugin-scaffolder-backend-module-my-awesome-plugin'));
-
 backend.add(import('@internal/plugin-scaffolder-backend-module-update-autovars'));
+backend.add(import('@internal/plugin-scaffolder-backend-module-download-json'));
 backend.start();
 
 
