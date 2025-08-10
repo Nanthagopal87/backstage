@@ -40,6 +40,7 @@
     "@backstage/theme": "^0.6.7",
     "@backstage/ui": "^0.6.0",
     "@internal/plugin-advice": "workspace:^",
+    "@internal/plugin-app-infra-dashboard": "workspace:^",
     "@internal/plugin-json-editor": "workspace:^",
     "@internal/plugin-json-tester": "workspace:^",
     "@material-ui/core": "^4.12.2",

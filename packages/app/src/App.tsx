@@ -38,6 +38,7 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 import { AdvicePage } from '@internal/plugin-advice';
 import { JsonEditorPage } from '@internal/plugin-json-editor';
 import { JsonTesterPage } from '@internal/plugin-json-tester';
+import { AppInfraDashboardPage } from '@internal/plugin-app-infra-dashboard';
 
 const app = createApp({
   apis,
@@ -100,6 +101,7 @@ const routes = (
     <Route path="/advice" element={<AdvicePage />} />
     <Route path="/json-editor" element={<JsonEditorPage />} />
     <Route path="/json-tester" element={<JsonTesterPage />} />
+    <Route path="/app-infra-dashboard" element={<AppInfraDashboardPage />} />
   </FlatRoutes>
 );
 
