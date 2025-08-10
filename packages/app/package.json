@@ -41,6 +41,7 @@
     "@backstage/ui": "^0.6.0",
     "@internal/plugin-advice": "workspace:^",
     "@internal/plugin-app-infra-dashboard": "workspace:^",
+    "@internal/plugin-infra-drag-and-drop": "workspace:^",
     "@internal/plugin-json-editor": "workspace:^",
     "@internal/plugin-json-tester": "workspace:^",
     "@material-ui/core": "^4.12.2",

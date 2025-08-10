@@ -39,6 +39,7 @@ import { AdvicePage } from '@internal/plugin-advice';
 import { JsonEditorPage } from '@internal/plugin-json-editor';
 import { JsonTesterPage } from '@internal/plugin-json-tester';
 import { AppInfraDashboardPage } from '@internal/plugin-app-infra-dashboard';
+import { InfraDragAndDropPage } from '@internal/plugin-infra-drag-and-drop';
 
 const app = createApp({
   apis,
@@ -102,6 +103,7 @@ const routes = (
     <Route path="/json-editor" element={<JsonEditorPage />} />
     <Route path="/json-tester" element={<JsonTesterPage />} />
     <Route path="/app-infra-dashboard" element={<AppInfraDashboardPage />} />
+    <Route path="/infra-drag-and-drop" element={<InfraDragAndDropPage />} />
   </FlatRoutes>
 );
 
