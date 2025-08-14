@@ -1,3 +1,24 @@
+### Install Tech-Radar Plugin
+1. cd packages/app
+2. yarn add npm i @backstage-community/plugin-tech-radar
+https://www.npmjs.com/package/@backstage-community/plugin-tech-radar
+or
+# From your Backstage root directory
+yarn --cwd packages/app add @backstage-community/plugin-tech-radar
+3. Add entry in App.tsx
+   ```
+   app->src->App.tsx
+   <Route path="/tech-radar" element={<TechRadarPage width={1500} height={800} />} />
+   ```
+4. Add entry for Sidebar
+    app->src->components->Root->Root.tsx
+    ```
+    import ExploreIcon from '@material-ui/icons/Explore';
+    <SidebarItem icon={ExploreIcon} to="tech-radar" text="Tech Radar" />
+    ```
+
+https://www.youtube.com/watch?v=QgxdAzAdN44
+
 
 ### Create Frontend Plugin
 ```

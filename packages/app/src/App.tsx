@@ -41,6 +41,9 @@ import { JsonTesterPage } from '@internal/plugin-json-tester';
 import { AppInfraDashboardPage } from '@internal/plugin-app-infra-dashboard';
 import { InfraDragAndDropPage } from '@internal/plugin-infra-drag-and-drop';
 
+import { TechRadarPage } from '@backstage-community/plugin-tech-radar';
+
+
 const app = createApp({
   apis,
   bindRoutes({ bind }) {
@@ -104,6 +107,7 @@ const routes = (
     <Route path="/json-tester" element={<JsonTesterPage />} />
     <Route path="/app-infra-dashboard" element={<AppInfraDashboardPage />} />
     <Route path="/infra-drag-and-drop" element={<InfraDragAndDropPage />} />
+    <Route path="/tech-radar" element={<TechRadarPage width={1500} height={800} />} />
   </FlatRoutes>
 );
 
