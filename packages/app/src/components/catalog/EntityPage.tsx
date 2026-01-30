@@ -60,6 +60,14 @@ import {
 
 import { AdviceCard } from '@internal/plugin-advice';
 
+// import {
+//   EntityGitlabContent,
+//   // isGitlabAvailable,
+//   // EntityGitlabPipelinesTable,
+//   // EntityGitlabMergeRequestsTable,
+//   // EntityGitlabMergeRequestsTable
+// } from '@immobiliarelabs/backstage-plugin-gitlab';
+
 const techdocsContent = (
   <EntityTechdocsContent>
     <TechDocsAddons>
@@ -157,6 +165,7 @@ const serviceEntityPage = (
 
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
+      {/* <EntityGitlabContent /> */}
     </EntityLayout.Route>
 
     <EntityLayout.Route

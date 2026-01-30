@@ -67,6 +67,19 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 backend.add(import('@internal/plugin-scaffolder-backend-module-my-awesome-plugin'));
 backend.add(import('@internal/plugin-scaffolder-backend-module-update-autovars'));
 backend.add(import('@internal/plugin-scaffolder-backend-module-download-json'));
+
+
+// ADD THIS FOR GITLAB CI/CD SUPPORT
+//backend.add(import('@immobiliarelabs/backstage-plugin-gitlab-backend'));
+//yarn --cwd packages/backend add @immobiliarelabs/backstage-plugin-gitlab-backend
+//backend.add(import('@immobiliarelabs/backstage-plugin-gitlab-backend/alpha'));
+
+
+
+// (Optional) This module automatically fills in GitLab annotations if they are missing
+//backend.add(import('@immobiliarelabs/backstage-plugin-gitlab-backend-module-catalog-filler'));
+//yarn --cwd packages/backend add @immobiliarelabs/backstage-plugin-gitlab-backend-module-catalog-filler
+
 backend.start();
 
 

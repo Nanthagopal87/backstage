@@ -182,7 +182,7 @@ fs:delete
 'https://raw.githubusercontent.com/Nanthagopal87/node-js-app/main/README.md'
 ==================
 
-set NODE_OPTIONS=--no-node-snapshot && yarn start).
+set NODE_OPTIONS=--no-node-snapshot && yarn start
 
 Powershelll
 $env:NODE_OPTIONS="--no-node-snapshot"; yarn start

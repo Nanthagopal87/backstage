@@ -42,7 +42,6 @@ integrations:
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
       token: ${GITHUB_TOKEN}
-      #token: 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
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -52,6 +51,12 @@ integrations:
       token: ${GITLAB_TOKEN}
 
 proxy:
+#   endpoints:
+#     '/gitlab/api':
+#       target: https://gitlab.com/api/v4
+#       allowedMethods: ['GET']
+#       headers:
+#         PRIVATE-TOKEN: ${GITLAB_TOKEN}
   ### Example for how to add a proxy endpoint for the frontend.
   ### A typical reason to do this is to handle HTTPS and CORS for internal services.
   # endpoints:
@@ -80,51 +85,82 @@ scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
+  providers:
+    gitlab:
+
+      nanthaApps:
+        host: gitlab.com # <--- THIS IS THE MISSING VALUE
+        group: 'cloudopsedge'
+        #entityFilename: '/catalog-info.yaml'
+        entityFilename: 'catalog-info.yaml'
+        #entityFilename: '**/catalog-info.yaml' # recurside glob pattern - Not Works
+        projectPattern: '.*' #projectPattern: 'SpringDemo' # Or use '.*' to find ALL repos with a catalog-info.yaml
+        #branch: 'main'
+        schedule:
+          frequency: { minutes: 1 }
+          timeout:   { minutes: 1 }
+
+      nanthaAccount:
+        host: gitlab.com # <--- THIS IS THE MISSING VALUE
+        group: 'cloudopsedge'
+        # GitLab uses 'entityFilename', not 'catalogPath'
+        #entityFilename: 'templates/**/*.yaml'
+        #entityFilename: 'templates/api-template.yaml' # Works
+        entityFilename: 'templates/all-templates.yaml'
+        # GitLab uses 'projectPattern', not 'filters.project'
+        #projectPattern: 'backstage-templates'
+        projectPattern: '.*' 
+        branch: 'main'
+        schedule:
+          frequency: { minutes: 1 }
+          timeout:   { minutes: 1 }
+
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    #- allow: [Component, System, API, Resource, Location]  #Template
+    - allow: [Component, System, API, Resource, Location, Template, Domain, Group]  #
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
       target: ../../examples/entities.yaml
 
     # Local example template
-    - type: file
-      target: ../../examples/template/template.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template.yaml
+    #   rules:
+    #     - allow: [Template]
 
-    - type: file
-      target: ../../examples/template/template2.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template2.yaml
+    #   rules:
+    #     - allow: [Template]
 
-    - type: file
-      target: ../../examples/template/template3.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template3.yaml
+    #   rules:
+    #     - allow: [Template]
 
-    - type: file
-      target: ../../examples/template/template4.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template4.yaml
+    #   rules:
+    #     - allow: [Template]
 
-    - type: file
-      target: ../../examples/template/template6.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template6.yaml
+    #   rules:
+    #     - allow: [Template]
 
-    - type: file
-      target: ../../examples/template/template7.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template7.yaml
+    #   rules:
+    #     - allow: [Template]
 
-    - type: file
-      target: ../../examples/template/template8.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template8.yaml
+    #   rules:
+    #     - allow: [Template]
     
 
     # Local example organizational data
