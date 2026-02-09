@@ -1,0 +1,75 @@
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: platform
+  description: platform
+spec:
+  owner: cloudopsedge
+  links:
+    - url: https://cloudopsedge.com
+      title: cloudopsedge
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: bu1
+  description: bu1
+spec:
+  owner: cloudopsedge
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: bu2
+  description: bu2
+spec:
+  owner: cloudopsedge
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: ecommerce
+  description: ecommerce
+spec:
+  owner: cloudopsedge
+  subdomainOf: bu2
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: rta
+  description: rta
+spec:
+  owner: cloudopsedge
+  subdomainOf: bu1
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: bootstrap
+  description: bootstrap
+spec:
+  owner: user:aaa
+  domain: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: payment-system
+  description: payment-system
+spec:
+  owner: ecommerce-team
+  domain: ecommerce
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: artist-engagement-portal
+  description: Everything related to artists
+  tags:
+    - portal
+spec:
+  owner: team-a
+  domain: ecommerce
+  type: service

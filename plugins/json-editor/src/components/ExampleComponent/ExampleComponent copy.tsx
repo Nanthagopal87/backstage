@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Content, Page } from '@backstage/core-components';
 
 export const ExampleComponent = () => {

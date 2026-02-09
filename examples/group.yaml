@@ -1,0 +1,80 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: cloudopsedge
+spec:
+  type: organization
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform
+  description: platform
+spec:
+  type: team
+  parent: cloudopsedge
+  children: [infra, sre, devops, infosec]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: infra
+  description: infra
+spec:
+  type: team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: sre
+  description: sre
+spec:
+  type: team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: devops
+  description: devops
+spec:
+  type: team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: infosec
+  description: infosec
+spec:
+  type: team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-team
+  description: ecommerce-team
+spec:
+  type: team
+  children: []
+---
+# apiVersion: backstage.io/v1alpha1
+# kind: System
+# metadata:
+#   name: bootstrap
+#   description: bootstrap
+# spec:
+#   owner: user:aa
+#   domain: platform
+# ---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: backstage
+  description: backstage
+spec:
+  owner: user:bb
+  domain: platform

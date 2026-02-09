@@ -1,6 +1,7 @@
 import { InfoCard } from '@backstage/core-components';
 import { fetchApiRef, useApi } from '@backstage/core-plugin-api';
-import React, { useEffect, useState } from 'react';
+//import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const AdviceCard = () => {
     // return <div>This is my adivce for the day</div>

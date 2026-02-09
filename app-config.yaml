@@ -30,6 +30,16 @@ backend:
   database:
     client: better-sqlite3
     connection: ':memory:'
+
+    # config options: https://node-postgres.com/apis/client
+    # client: pg
+    # connection:
+    #   host: ${POSTGRES_HOST}
+    #   port: ${POSTGRES_PORT}
+    #   user: ${POSTGRES_USER}
+    #   password: ${POSTGRES_PASSWORD}
+
+
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
   # reading:
   #   allow:
@@ -48,6 +58,7 @@ integrations:
     #   token: ${GHE_TOKEN}
   gitlab:
     - host: gitlab.com
+      apiBaseUrl: https://gitlab.com/api/v4
       token: ${GITLAB_TOKEN}
 
 proxy:
@@ -77,9 +88,19 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
+  environment: development
   providers:
     # See https://backstage.io/docs/auth/guest/provider
     guest: {}
+    # github:
+    #   development:
+    #     clientId: ${GITHUB_CLIENT_ID}
+    #     clientSecret: ${GITHUB_CLIENT_SECRET}
+    #     signIn:
+    #       resolvers:
+    #         # Matches the GitHub username with the Backstage user entity name.
+    #         # See https://backstage.io/docs/auth/github/provider#resolvers for more resolvers.
+    #         - resolver: usernameMatchingUserEntityName
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -88,40 +109,59 @@ catalog:
   providers:
     gitlab:
 
-      nanthaApps:
-        host: gitlab.com # <--- THIS IS THE MISSING VALUE
-        group: 'cloudopsedge'
-        #entityFilename: '/catalog-info.yaml'
-        entityFilename: 'catalog-info.yaml'
-        #entityFilename: '**/catalog-info.yaml' # recurside glob pattern - Not Works
-        projectPattern: '.*' #projectPattern: 'SpringDemo' # Or use '.*' to find ALL repos with a catalog-info.yaml
-        #branch: 'main'
-        schedule:
-          frequency: { minutes: 1 }
-          timeout:   { minutes: 1 }
+      # ADD THIS SECTION for Org/User/Group sync
+      # org-sync: 
+      #   host: gitlab.com
+      #   orgEnabled: true  # This triggers User/Group ingestion
+      #   #group: '118654065'
+      #   group: 'cloudopsedge' # The root group to start syncing from
+      #   #group: 'cloudopsedge/platform'
+      #   recursive: true # Sync subgroups as well
+      #   #projectPattern: 'DISABLE_PROJECT_DISCOVERY_FOR_ORG_PROVIDER' # Stops conflicts
 
-      nanthaAccount:
-        host: gitlab.com # <--- THIS IS THE MISSING VALUE
-        group: 'cloudopsedge'
-        # GitLab uses 'entityFilename', not 'catalogPath'
-        #entityFilename: 'templates/**/*.yaml'
-        #entityFilename: 'templates/api-template.yaml' # Works
-        entityFilename: 'templates/all-templates.yaml'
-        # GitLab uses 'projectPattern', not 'filters.project'
-        #projectPattern: 'backstage-templates'
-        projectPattern: '.*' 
-        branch: 'main'
-        schedule:
-          frequency: { minutes: 1 }
-          timeout:   { minutes: 1 }
+      #   schedule:
+      #     #frequency: { seconds: 10 }
+      #     frequency: { minutes: 10 }
+      #     timeout: { minutes: 1 }
+
+      # catalog-scan:
+      #   host: gitlab.com # <--- THIS IS THE MISSING VALUE
+      #   group: 'cloudopsedge'
+      #   #entityFilename: '/catalog-info.yaml'
+      #   entityFilename: 'catalog-info.yaml'
+      #   #entityFilename: '**/catalog-info.yaml' # recurside glob pattern - Not Works
+      #   projectPattern: '.*' #projectPattern: 'SpringDemo' # Or use '.*' to find ALL repos with a catalog-info.yaml
+      #   #branch: 'main'
+
+      #   schedule:
+      #     frequency: { minutes: 1 }
+      #     timeout:   { minutes: 1 }
+
+      # nanthaAccount:
+      #   host: gitlab.com # <--- THIS IS THE MISSING VALUE
+      #   entityFilename: 'templates/all-templates.yaml'
+      #   projectPattern: '.*' 
+      #   branch: 'main'
+      #   schedule:
+      #     frequency: { minutes: 1 }
+      #     timeout:   { minutes: 1 }
 
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
     #- allow: [Component, System, API, Resource, Location]  #Template
-    - allow: [Component, System, API, Resource, Location, Template, Domain, Group]  #
+    #- allow: [Component, System, API, Resource, Location, Template, Domain, Group]  #
+    - allow: [Component, System, API, Resource, Location, Template, Domain, Group, User]
+
   locations:
+    # - type: url
+    #   #target: https://gitlab.com/cloudopsedge/backstage-templates/-/raw/main/catalog-info.yaml
+    #   target:  https://gitlab.com/cloudopsedge/backstage-templates/-/blob/main/templates/all-templates.yaml
+    #   #https://gitlab.com/cloudopsedge/backstage-templates/-/blob/main/templates/all-templates.yaml
+    #   rules:
+    #     - allow: [Template, Location]
+
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
       target: ../../examples/entities.yaml
@@ -168,6 +208,14 @@ catalog:
       target: ../../examples/org.yaml
       rules:
         - allow: [User, Group]
+    - type: file
+      target: ../../examples/group.yaml
+      rules:
+        - allow: [User, Group]
+    - type: file
+      target: ../../examples/domain.yaml
+      rules:
+        - allow: [User, Group, Domain, System]
 
     ## Uncomment these lines to add more example data
     # - type: url
@@ -185,4 +233,5 @@ kubernetes:
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
 permission:
   # setting this to `false` will disable permissions
-  enabled: true
+  #enabled: true
+  enabled: false

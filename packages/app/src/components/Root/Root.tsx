@@ -29,6 +29,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
 import GroupIcon from '@material-ui/icons/People';
 
+import LayersIcon from '@material-ui/icons/Layers';
+
+
 const useSidebarLogoStyles = makeStyles({
   root: {
     width: sidebarConfig.drawerWidthClosed,
@@ -77,6 +80,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarItem icon={LibraryBooks} to="docs" text="Docs" />
         <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
         <SidebarItem icon={ExploreIcon} to="tech-radar" text="Tech Radar" />
+        <SidebarItem icon={LayersIcon} to="explore" text="Explore" />
         {/* End global nav */}
         <SidebarDivider />
         <SidebarScrollWrapper>
@@ -92,6 +96,8 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       >
         <SidebarSettings />
       </SidebarGroup>
+    
+
     </Sidebar>
     {children}
   </SidebarPage>

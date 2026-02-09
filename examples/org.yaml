@@ -1,4 +1,3 @@
----
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
 apiVersion: backstage.io/v1alpha1
 kind: User
@@ -15,3 +14,10 @@ metadata:
 spec:
   type: team
   children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: Nanthagopal87
+spec:
+  memberOf: [guests]

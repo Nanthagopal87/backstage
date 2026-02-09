@@ -5,7 +5,7 @@ import {
 } from '@backstage/core-plugin-api';
 
 import { rootRouteRef } from './routes';
-import { Component } from 'react';
+//import { Component } from 'react';
 
 export const advicePlugin = createPlugin({
   id: 'advice',

@@ -1,5 +1,5 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
-import { z } from 'zod';
+//import { z } from 'zod';
 /**
  * Creates a custom scaffolder action to encode a string and write to a file.
  */

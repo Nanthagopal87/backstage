@@ -38,11 +38,10 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 import { AdvicePage } from '@internal/plugin-advice';
 import { JsonEditorPage } from '@internal/plugin-json-editor';
 import { JsonTesterPage } from '@internal/plugin-json-tester';
-import { AppInfraDashboardPage } from '@internal/plugin-app-infra-dashboard';
-import { InfraDragAndDropPage } from '@internal/plugin-infra-drag-and-drop';
-
 import { TechRadarPage } from '@backstage-community/plugin-tech-radar';
+import { explorePage } from './components/explore/ExplorePage';
 
+//import { githubAuthApiRef } from '@backstage/core-plugin-api';
 
 const app = createApp({
   apis,
@@ -65,6 +64,35 @@ const app = createApp({
   },
   components: {
     SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
+  //    SignInPage: props => (
+  //   <SignInPage
+  //     {...props}
+  //     auto
+  //     provider={{
+  //       id: 'github-auth-provider',
+  //       title: 'GitHub',
+  //       message: 'Sign in using GitHub',
+  //       apiRef: githubAuthApiRef,
+  //     }}
+  //   />
+  // ),
+
+  //Third
+// SignInPage: props => (
+//       <SignInPage
+//         {...props}
+//         providers={[
+//           'guest',
+//           {
+//             id: 'github-auth-provider',
+//             title: 'GitHub',
+//             message: 'Sign in using GitHub',
+//             apiRef: githubAuthApiRef,
+//           },
+//         ]}
+//       />
+//     ),
+
   },
 });
 
@@ -105,9 +133,11 @@ const routes = (
     <Route path="/advice" element={<AdvicePage />} />
     <Route path="/json-editor" element={<JsonEditorPage />} />
     <Route path="/json-tester" element={<JsonTesterPage />} />
-    <Route path="/app-infra-dashboard" element={<AppInfraDashboardPage />} />
-    <Route path="/infra-drag-and-drop" element={<InfraDragAndDropPage />} />
     <Route path="/tech-radar" element={<TechRadarPage width={1500} height={800} />} />
+
+    <Route path="/explore" element={explorePage} />
+
+
   </FlatRoutes>
 );
 

@@ -1,3 +1,35 @@
+### Create Custom Plugin for GitLab Branch Name extraction
+
+yarn backstage-cli new or yarn new
+- select backend-plugin
+- Name/id of the plugin: gitlab-lifecycle-backend
+
+```
+$ yarn backstage-cli new
+? What do you want to create? backend-plugin - A new backend plugin
+? Enter the ID of the plugin [required] gitlab-lifecycle-backend
+  templating    plugins\gitlab-lifecycle-backend-backend ✔
+  backend       adding @internal/plugin-gitlab-lifecycle-backend-backend ✔
+  executing     yarn install ✔ 
+  executing     yarn lint --fix ✔ 
+
+🎉  Successfully created backend-plugin
+```
+
+```
+ "@backstage/plugin-catalog-backend": "^1.17.1",  // <--- ADDED, matching typical versions
+    "@backstage/plugin-catalog-common": "^1.0.18", // <--- ADDED, matching typical versions
+    "@backstage/config": "^1.1.1",                 // <--- ADDED, matching typical versions
+    "winston": "^3.8.2",                           // <--- ADDED, common version for Backstage
+    "url": "^0.11.0"                               // <--- ADDED, for explicit reference
+    "@backstage/catalog-model": "^1.4.3",  // <--- ADD THIS LINE, match version to your project
+
+    dev-depene
+     "@types/node": "^18.0.0",                       // <--- Ensure this matches your project
+    "@types/url": "^0.11.0",                        // <--- ADDED, type definitions for 'url'
+```
+
+
 ### Install Tech-Radar Plugin
 1. cd packages/app
 2. yarn add npm i @backstage-community/plugin-tech-radar
@@ -91,7 +123,7 @@ Accept JSON input, simulate transformation, return modified JSON
 
 ### ============== Create a new Plugin=============
 
-1. yarn new
+1. yarn new or yarn backstage-cli new
 2. pick frontend-plugin
 3. provide plugin name: e.g json-editor
 It will install necessay components
